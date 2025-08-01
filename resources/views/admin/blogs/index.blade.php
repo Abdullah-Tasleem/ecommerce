@@ -1,0 +1,67 @@
+@extends('dashboard.layout.main')
+@section('title', 'Blogs')
+@section('dashboard')
+    <div class="container">
+        <h2 class="mt-2">Blog List</h2>
+        <a href="{{ route('admin.blogs.create') }}" class="btn btn-primary mb-3">Create New Blog</a>
+        @if (session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert" id="successMessage">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
+
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Published At</th>
+                    <th>Image</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($blogs as $blog)
+                    <tr>
+                        <td>{{ $blog->title }}</td>
+                        <td>{{ $blog->published_at }}</td>
+                        <td>
+                            @if ($blog->images)
+                                @foreach ($blog->images as $img)
+                                    <img src="{{ asset('storage/' . $img) }}" alt="Blog Image"
+                                        style="width: 60px; height: 60px; object-fit: cover; margin: 2px;">
+                                @endforeach
+                            @else
+                                N/A
+                            @endif
+                        </td>
+                        <td>{{ $blog->status ? 'Active' : 'Inactive' }}</td>
+                        <td>
+                            <a href="{{ route('admin.blogs.show', $blog) }}" class="btn btn-info btn-sm">View</a>
+                            <a href="{{ route('admin.blogs.edit', $blog) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <form action="{{ route('admin.blogs.destroy', $blog) }}" method="POST"
+                                style="display:inline-block;">
+                                @csrf @method('DELETE')
+                                <button class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+@endsection
+@push('script')
+  <script>
+        setTimeout(() => {
+            const msg = document.getElementById('successMessage');
+            if (msg) {
+                // Use Bootstrap's built-in fade out
+                let bsAlert = new bootstrap.Alert(msg);
+                bsAlert.close();
+            }
+        }, 3000);
+    </script>
+@endpush
