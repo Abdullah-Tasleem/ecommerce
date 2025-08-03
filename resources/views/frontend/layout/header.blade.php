@@ -25,28 +25,26 @@
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
 </head>
 
 <body>
 
-  <!-- preloader start -->
-<div id="preloader">
-    <div class="bd-loader-inner">
-        <div class="bd-loader">
-            <span class="bd-loader-item"></span>
-            <span class="bd-loader-item"></span>
-            <span class="bd-loader-item"></span>
-            <span class="bd-loader-item"></span>
-            <span class="bd-loader-item"></span>
-            <span class="bd-loader-item"></span>
-            <span class="bd-loader-item"></span>
-            <span class="bd-loader-item"></span>
+    <!-- preloader start -->
+    <div id="preloader">
+        <div class="bd-loader-inner">
+            <div class="bd-loader">
+                <span class="bd-loader-item"></span>
+                <span class="bd-loader-item"></span>
+                <span class="bd-loader-item"></span>
+                <span class="bd-loader-item"></span>
+                <span class="bd-loader-item"></span>
+                <span class="bd-loader-item"></span>
+                <span class="bd-loader-item"></span>
+                <span class="bd-loader-item"></span>
+            </div>
         </div>
     </div>
-</div>
-<!-- preloader end -->
+    <!-- preloader end -->
 
 
     <!-- Back to top start -->
