@@ -29,7 +29,8 @@ Route::get('/search/suggest', [FrontendController::class, 'searchProduct'])->nam
 Route::get('/product/quick-view/{id}', [FrontendController::class, 'quickView'])->name('product.quickView');
 Route::get('/product/{product}/{slug}', [FrontendController::class, 'view'])->name('details');
 
-Route::get('/orders', [UserOrderController::class, 'index'])->middleware('auth')->name('orders.index');
+// Route::get('/orders', [UserOrderController::class, 'index'])->middleware('auth')->name('orders.index');
+// Route::get('/orders-details', [UserOrderController::class, 'show'])->middleware('auth')->name('orders.show');
 
 // ───── Authenticated Dashboard ─────
 Route::get('/dashboard', function () {
