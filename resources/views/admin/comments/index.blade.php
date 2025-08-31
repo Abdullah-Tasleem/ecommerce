@@ -20,7 +20,7 @@
 
 
         <div class="table-responsive">
-            <table class="table table-bordered align-middle">
+                    <table id="datatable" class="table table-bordered">
                 <thead class="table-light">
                     <tr>
                         <th>#</th>
@@ -80,6 +80,9 @@
 @endsection
 @push('script')
     <script>
+        $(document).ready(function() {
+            $('#datatable').DataTable();
+        });
         setTimeout(() => {
             const successMsg = document.getElementById('successMessage');
             const errorMsg = document.getElementById('errorMessage');
@@ -95,3 +98,4 @@
         }, 3000);
     </script>
 @endpush
+

@@ -5,14 +5,15 @@
         <h2 class="mt-2">Blog List</h2>
         <a href="{{ route('admin.blogs.create') }}" class="btn btn-primary mb-3">Create New Blog</a>
         @if (session('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert" id="successMessage">
-        {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-@endif
+            <div class="alert alert-success alert-dismissible fade show" role="alert" id="successMessage">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
 
 
-        <table class="table table-bordered">
+        <table id="datatable" class="table table-bordered">
+
             <thead>
                 <tr>
                     <th>Title</th>
@@ -54,13 +55,16 @@
     </div>
 @endsection
 @push('script')
-  <script>
+    <script>
+        $(document).ready(function() {
+            $('#datatable').DataTable();
+        });
+        // Auto-hide success message
         setTimeout(() => {
             const msg = document.getElementById('successMessage');
             if (msg) {
-                // Use Bootstrap's built-in fade out
-                let bsAlert = new bootstrap.Alert(msg);
-                bsAlert.close();
+                msg.classList.add('fade');
+                setTimeout(() => msg.remove(), 500);
             }
         }, 3000);
     </script>

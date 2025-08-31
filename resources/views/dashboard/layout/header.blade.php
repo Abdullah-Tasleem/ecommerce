@@ -112,11 +112,11 @@
                         </a>
                     </li>
 
-                    <li class="d-none d-sm-inline-block">
+                    {{-- <li class="d-none d-sm-inline-block">
                         <div class="nav-link" id="light-dark-mode">
                             <i class="ri-moon-line fs-22"></i>
                         </div>
-                    </li>
+                    </li> --}}
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"

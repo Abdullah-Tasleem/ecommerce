@@ -13,15 +13,15 @@
             </div>
         @endif
 
-        <table class="table table-bordered">
-            <thead>
+        <table id="datatable" class="table table-striped text-center align-middle">
+            <thead class="text-center">
                 <tr>
-                    <th>Name</th>
-                    <th>Status</th>
-                    <th>Actions</th>
+                    <th class="text-center">Name</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Actions</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="text-center">
                 @forelse ($tags as $tag)
                     <tr>
                         <td>{{ $tag->name }}</td>
@@ -57,6 +57,9 @@
 
 @push('script')
     <script>
+        $(document).ready(function() {
+            $('#datatable').DataTable();
+        });
         // Auto-hide success message after 3 seconds
         setTimeout(() => {
             const alert = document.getElementById('successMessage');

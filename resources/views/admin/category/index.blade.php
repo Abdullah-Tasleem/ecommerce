@@ -13,53 +13,46 @@
             </div>
         @endif
 
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <table id="datatable" class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
+        <table id="datatable" class="table table-striped text-center align-middle">
+            <thead class="text-center">
+                <tr>
+                    <th class="text-center">Name</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
 
-                        <tbody>
-                            @forelse ($categories as $category)
-                                <tr>
-                                    <td>{{ $category->name }}</td>
-                                    <td>
-                                        @if ($category->status)
-                                            <span class="badge bg-success">Active</span>
-                                        @else
-                                            <span class="badge bg-danger">Inactive</span>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('categories.show', $category->id) }}"
-                                            class="btn btn-sm btn-secondary">View</a>
-                                        <a href="{{ route('categories.edit', $category->id) }}"
-                                            class="btn btn-sm btn-primary">Edit</a>
-                                        <form method="POST" action="{{ route('categories.destroy', $category->id) }}"
-                                            style="display:inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="btn btn-sm btn-danger">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="3">No categories found.</td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+            <tbody class="text-center">
+                @forelse ($categories as $category)
+                    <tr>
+                        <td class="text-center">{{ $category->name }}</td>
+                        <td class="text-center">
+                            @if ($category->status)
+                                <span class="badge bg-success">Active</span>
+                            @else
+                                <span class="badge bg-danger">Inactive</span>
+                            @endif
+                        </td>
+                        <td class="text-center">
+                            <a href="{{ route('categories.show', $category->id) }}"
+                                class="btn btn-sm btn-secondary">View</a>
+                            <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                            <form method="POST" action="{{ route('categories.destroy', $category->id) }}"
+                                style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="3" class="text-center">No categories found.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
 
-                </div> <!-- end card -->
-            </div><!-- end col-->
-        </div> <!-- end row-->
     @endsection
 
 

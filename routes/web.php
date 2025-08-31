@@ -17,6 +17,9 @@ use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\BlogCommentController;
 use App\Http\Controllers\UserBlogCommentController;
 use App\Http\Controllers\UserBlogController;
+use App\Models\Order;
+use App\Models\Product;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 
@@ -47,7 +50,10 @@ Route::middleware('auth')->group(function () {
 // ───── Admin Dashboard ─────
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/', function () {
-        return view('dashboard.dashboard'); // Make sure this view exists
+        $usersCount = User::count();
+        $ordersCount = Order::count();
+        $productsCount = Product::count();
+        return view('dashboard.dashboard', compact('usersCount', 'ordersCount' , 'productsCount'));
     })->name('admin.dashboard');
 });
 

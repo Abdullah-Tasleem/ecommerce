@@ -2,8 +2,9 @@
 @section('title', 'Create Category')
 @section('dashboard')
 <div class="container-fluid">
+   <h2 class="mt-2">Create Category</h2>
     <div class="row">
-        <div class="col-12 mt-4">
+        <div class="col-12 mt-3">
             <div class="card">
                 <div class="card-body">
                     <div class="row">
