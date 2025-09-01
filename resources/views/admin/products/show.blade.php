@@ -1,7 +1,7 @@
 @extends('dashboard.layout.main')
 @section('title', 'View Products')
 @section('dashboard')
-    <div class="container mt-4">
+    <div class="container mt-3">
         <h2>View Product</h2>
 
         <div class="card">
@@ -77,8 +77,8 @@
                         @endforelse
                     </div>
                 </div>
-                <a href="{{ route('products.index') }}" class="btn btn-secondary">Back to Products</a>
                 <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning">Edit</a>
+                <a href="{{ route('products.index') }}" class="btn btn-secondary">Back</a>
             </div>
         </div>
     </div>

@@ -1,7 +1,7 @@
 @extends('dashboard.layout.main')
 @section('title', 'Products')
 @section('dashboard')
-    <div class="container mt-4">
+    <div class="container mt-3">
         <h2>All Products</h2>
 
         <a href="{{ route('products.create') }}" class="btn btn-success mb-3">+ Add New Product</a>
@@ -15,29 +15,25 @@
         @endif
 
         {{-- Products Table --}}
-        <table class="table table-bordered">
+        <table id="datatable" class="table table-bordered">
             <thead>
                 <tr>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Name</th>
-                            {{-- <th>Slug</th> --}}
-                            <th>Regular Price ($)</th>
-                            <th>Sale ($)</th>
-                            <th>Stock</th>
-                            <th>Featured</th>
-                            <th>Image</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
+                    <th>#</th>
+                    <th>Name</th>
+                    {{-- <th>Slug</th> --}}
+                    <th>Regular Price ($)</th>
+                    <th>Sale ($)</th>
+                    <th>Stock</th>
+                    <th>Featured</th>
+                    <th>Image</th>
+                    <th>Status</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($products as $product)
                     <tr>
-                        <td>{{ $loop->iteration + ($products->currentPage() - 1) * $products->perPage() }}</td>
+                        <td>{{ $loop->iteration}}</td>
                         <td>{{ $product->name }}</td>
                         {{-- <td>
                             {{ Str::limit($product->slug, 20) }}
@@ -82,14 +78,14 @@
                 @endforeach
             </tbody>
         </table>
-
-        {{-- Pagination --}}
-        {{ $products->links() }}
     </div>
 @endsection
 
 @push('script')
     <script>
+        $(document).ready(function() {
+            $('#datatable').DataTable();
+        });
         // Hide success message after 3 seconds
         setTimeout(function() {
             const msg = document.getElementById('successMessage');

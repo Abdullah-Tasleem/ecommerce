@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\OrderPlaced;
 use App\Models\User;
 use App\Models\Order;
 use Illuminate\Http\Request;
@@ -24,20 +25,33 @@ class CheckoutController extends Controller
             'city' => 'required',
             'zip' => 'required',
             'email' => 'required|email',
-            'phone' => 'required',
+            'phone' => 'required|digits:11',
             'password' => 'nullable|min:6',
             'payment_method' => 'required|in:cod,stripe',
         ]);
 
-        // Register or login user
-        $user = User::firstOrCreate(
-            ['email' => $request->email],
-            [
+        $user = Auth::user();
+
+        if ($user) {
+            // Logged-in user: check if email matches
+            if ($user->email !== $request->email) {
+                return redirect()->back()->with('error', 'You are logged in as ' . $user->email . '. Please use this email or log out to use a different one.');
+            }
+        } else {
+            // Not logged in: check if email exists
+            $existingUser = User::where('email', $request->email)->first();
+            if ($existingUser) {
+                return redirect()->back()->with('error', 'Email already registered. Please login.');
+            }
+
+            // Create new user
+            $user = User::create([
                 'name' => $request->first_name,
+                'email' => $request->email,
                 'password' => Hash::make($request->password ?? Str::random(12)),
-            ]
-        );
-        Auth::login($user);
+            ]);
+            Auth::login($user);
+        }
 
         $cart = session('cart', []);
         $discount = session('discount_amount', 0);
@@ -57,7 +71,7 @@ class CheckoutController extends Controller
         if ($request->payment_method === 'cod') {
             $order = $this->storeOrder($user, $cart, $subtotal, $discount, $finalAmount, $address, 'pending', 'cod');
 
-
+            event(new OrderPlaced($order));
             Mail::to($user->email)->send(new OrderConfirmation($order));
             session()->forget('cart');
 
@@ -119,6 +133,7 @@ class CheckoutController extends Controller
 
         $order = $this->storeOrder($user, $cart, $subtotal, $discount, $finalAmount, $address, 'paid', 'stripe');
 
+        event(new OrderPlaced($order));
         Mail::to($user->email)->send(new OrderConfirmation($order));
 
         session()->forget([

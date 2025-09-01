@@ -1,7 +1,7 @@
 @extends('dashboard.layout.main')
 @section('title', 'Edit Review')
 @section('dashboard')
-<h2>Edit Review</h2>
+<h2 class="mt-3">Edit Review</h2>
 
 <form action="{{ route('admin.reviews.update', $review) }}" method="POST">
     @csrf
@@ -18,5 +18,7 @@
     </div>
 
     <button type="submit" class="btn btn-primary">Update Review</button>
+    <a href="{{ route('admin.reviews.index') }}" class="btn btn-secondary">Cancel</a>
+
 </form>
 @endsection

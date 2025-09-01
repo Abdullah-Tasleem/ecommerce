@@ -22,7 +22,7 @@ class UserContactController extends Controller
         }
 
         $request->validate([
-            'phone' => 'required|string',
+            'phone' => ['required', 'digits:11'],
             'date' => 'required|date',
             'comment' => 'required|string',
             'cf-turnstile-response' => 'required|string',

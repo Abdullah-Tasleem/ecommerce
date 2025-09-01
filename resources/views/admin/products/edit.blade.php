@@ -2,7 +2,7 @@
 @section('title', 'Edit Product')
 
 @section('dashboard')
-    <div class="container mt-4">
+    <div class="container mt-3">
         <h2>Edit Product</h2>
 
         @if ($errors->any())
@@ -123,6 +123,8 @@
 
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary">Update Product</button>
+                    <a href="{{ route('products.index') }}" class="btn btn-secondary">Cancel</a>
+
                 </div>
             </div>
         </form>

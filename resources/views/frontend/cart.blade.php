@@ -167,6 +167,15 @@
     </main>
     @push('scripts')
         <script>
+            const notyf = new Notyf({
+                duration: 3000,
+                position: {
+                    x: 'right',
+                    y: 'top'
+                }
+            });
+        </script>
+        <script>
             $(document).ready(function() {
                 let updateTimeouts = {}; // Store timeout per item ID
 
@@ -248,9 +257,7 @@
                         },
                         success: function(res) {
                             if (res.success) {
-                                $('#coupon-success-msg').text(
-                                    `Coupon "${res.coupon_code}" applied. Discount: $${res.discount}`
-                                );
+                                notyf.success(`Coupon "${res.coupon_code}" applied. Discount: $${res.discount}`);
                                 $('#cart-total').text(`$${res.total}`);
                                 $('span.text-success').text(`-$${res.discount}`);
 
@@ -264,7 +271,7 @@
                                         .replaceWith(`Discount (${res.coupon_code})`);
                                 }
                             } else {
-                                $('#coupon-error-msg').text(res.message);
+                                notyf.error(res.message);
                             }
                         }
                     });

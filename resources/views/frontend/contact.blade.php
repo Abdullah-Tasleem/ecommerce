@@ -13,7 +13,7 @@
                             <div class="breadcrumb__menu">
                                 <nav>
                                     <ul>
-                                        <li><span><a href="index.html">Home</a></span></li>
+                                        <li><span><a href="{{ route('home') }}">Home</a></span></li>
                                         <li><span>Contact</span></li>
                                     </ul>
                                 </nav>
@@ -94,7 +94,8 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="contact__from-input">
-                                                <input type="tel" name="phone" placeholder="Phone Number" required>
+                                                <input type="tel" name="phone" pattern="[0-9]{11}" maxlength="11"
+                                                    minlength="11" placeholder="Phone Number" required>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -139,4 +140,30 @@
 @endsection
 @push('scripts')
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var notyf = new Notyf({
+                duration: 4000,
+                position: {
+                    x: 'right',
+                    y: 'top',
+                }
+            });
+
+            @if (session('success'))
+                notyf.success("{{ session('success') }}");
+            @endif
+
+            @if (session('error'))
+                notyf.error("{{ session('error') }}");
+            @endif
+
+            @if ($errors->any())
+                @foreach ($errors->all() as $error)
+                    notyf.error("{{ $error }}");
+                @endforeach
+            @endif
+        });
+    </script>
 @endpush

@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-
-
-<!-- Mirrored from techzaa.in/velonic/layouts/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 02 Jul 2025 00:34:51 GMT -->
-
 <head>
     <meta charset="utf-8" />
-    <title>@yield('title') | Velonic</title>
+    <title>
+        @hasSection('title')
+            @yield('title') | Velonic
+        @else
+            Velonic
+        @endif
+    </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully responsive admin theme which can be used to build CRM, CMS,ERP etc." name="description" />
     <meta content="Techzaa" name="author" />
-    <!-- jQuery (First) -->
+    <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
     <!-- Bootstrap CSS -->
@@ -32,6 +34,7 @@
     <script src="{{ asset('dashboard-assets/js/config.js') }}"></script>
     <link href="{{ asset('dashboard-assets/css/app.min.css') }}" rel="stylesheet" id="app-style" />
     <link href="{{ asset('dashboard-assets/css/icons.min.css') }}" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="{{ asset('admin_favicon.png') }}">
 </head>
 
 <body>

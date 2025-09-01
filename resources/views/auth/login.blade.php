@@ -139,3 +139,23 @@
     </section>
     <!-- login area end -->
 @endsection
+@push('scripts')
+
+@if (session('error'))
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var notyf = new Notyf({
+                duration: 4000,
+                position: {
+                    x: 'right',
+                    y: 'top',
+                }
+            });
+
+            notyf.error("{{ session('error') }}");
+        });
+    </script>
+@endif
+@endpush

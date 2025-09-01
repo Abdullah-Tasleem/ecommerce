@@ -1,7 +1,7 @@
 @extends('dashboard.layout.main')
 @section('title', 'Orders')
 @section('dashboard')
-    <div class="container mt-4">
+    <div class="container mt-3">
         <h2>All Orders</h2>
 
         @if (session('success'))

@@ -46,3 +46,18 @@
     </div>
 @endif
 @endsection
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const notyf = new Notyf();
+
+        @if(session('success'))
+            notyf.success(@json(session('success')));
+        @endif
+
+        @if(session('error'))
+            notyf.error(@json(session('error')));
+        @endif
+    });
+</script>
+@endpush

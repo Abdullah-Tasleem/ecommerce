@@ -1,6 +1,4 @@
 @extends('dashboard.layout.main')
-
-
 @section('dashboard')
     <!-- Start Content-->
     <div class="container-fluid">
@@ -40,7 +38,7 @@
             </div> <!-- end col--> --}}
 
             <div class="col-xxl-3 col-sm-6">
-                <div class="card widget-flat text-bg-info">
+                <div class="card widget-flat text-bg-purple">
                     <div class="card-body">
                         <div class="float-end">
                             <i class="ri-shopping-basket-line widget-icon"></i>
@@ -69,7 +67,7 @@
                 </div>
             </div>
             <div class="col-xxl-3 col-sm-6">
-                <div class="card widget-flat text-bg-purple">
+                <div class="card widget-flat text-bg-info">
                     <div class="card-body">
                         <div class="float-end">
                             <i class="ri-wallet-2-line widget-icon"></i>
@@ -82,7 +80,6 @@
                     </div>
                 </div>
             </div> <!-- end col-->
-
         </div>
 
         <div class="row">
@@ -168,7 +165,6 @@
                     </div> <!-- end card-body-->
                 </div> <!-- end card-->
             </div> <!-- end col-->
-
         </div>
         <!-- end row -->
     </div>

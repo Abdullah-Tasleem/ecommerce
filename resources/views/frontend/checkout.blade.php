@@ -54,7 +54,7 @@
                                     <div class="col-md-6">
                                         <div class="checkout-form-list">
                                             <label>First Name <span class="required">*</span></label>
-                                            <input type="text" name="first_name" placeholder="">
+                                            <input type="text" name="first_name" placeholder="" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -72,42 +72,44 @@
                                     <div class="col-md-12">
                                         <div class="checkout-form-list">
                                             <label>Address <span class="required">*</span></label>
-                                            <input type="text" name="address" placeholder="Street address">
+                                            <input type="text" name="address" placeholder="Street address" required>
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
+                                    {{-- <div class="col-md-12">
                                         <div class="checkout-form-list">
                                             <input type="text" placeholder="Apartment, suite, unit etc. (optional)">
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-md-12">
                                         <div class="checkout-form-list">
                                             <label>Town / City <span class="required">*</span></label>
-                                       <input type="text" name="city" placeholder="">
+                                            <input type="text" name="city" placeholder="" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="checkout-form-list">
                                             <label>State / County <span class="required">*</span></label>
-                                            <input type="text" name="state" placeholder="">
+                                            <input type="text" name="state" placeholder="" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="checkout-form-list">
                                             <label>Postcode / Zip <span class="required">*</span></label>
-                                            <input type="text" name="zip" placeholder="Postcode / Zip">
+                                            <input type="text" name="zip" placeholder="Postcode / Zip" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="checkout-form-list">
                                             <label>Email Address <span class="required">*</span></label>
-                                            <input type="email" name='email' placeholder="">
+                                            <input type="email" name='email' placeholder="" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="checkout-form-list">
                                             <label>Phone <span class="required">*</span></label>
-                                            <input type="text" name="phone" placeholder="Postcode / Zip">
+                                            <input type="text" name="phone" placeholder="Enter 11-digit phone number"
+                                                required pattern="\d{11}" maxlength="11"
+                                                title="Phone number must be 11 digits">
                                         </div>
                                     </div>
                                     {{-- <div class="col-md-12">
@@ -272,7 +274,7 @@
                                 <div class="payment-method">
                                     <div class="accordion" id="checkoutAccordion">
                                         <!-- Cash on Delivery -->
-                                        <div class="accordion-item">
+                                        <div class="accordion-item" data-method="cod">
                                             <h2 class="accordion-header" id="checkoutCod">
                                                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                                     data-bs-target="#collapseCod" aria-expanded="true"
@@ -293,7 +295,7 @@
                                         </div>
 
                                         <!-- Stripe -->
-                                        <div class="accordion-item">
+                                        <div class="accordion-item" data-method="stripe">
                                             <h2 class="accordion-header" id="checkoutStripe">
                                                 <button class="accordion-button collapsed" type="button"
                                                     data-bs-toggle="collapse" data-bs-target="#collapseStripe"
@@ -335,10 +337,10 @@
 @endsection
 @push('scripts')
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const radios = document.querySelectorAll('input[name="payment_method"]');
             radios.forEach(radio => {
-                radio.addEventListener('change', function () {
+                radio.addEventListener('change', function() {
                     const selectedMethod = this.value;
 
                     // Collapse all accordions
@@ -350,7 +352,8 @@
                     allButtons.forEach(btn => btn.classList.add('collapsed'));
 
                     // Find matching accordion item
-                    const item = document.querySelector(`.accordion-item[data-method="${selectedMethod}"]`);
+                    const item = document.querySelector(
+                        `.accordion-item[data-method="${selectedMethod}"]`);
                     if (item) {
                         const button = item.querySelector('.accordion-button');
                         const collapse = item.querySelector('.accordion-collapse');
@@ -361,6 +364,20 @@
                     }
                 });
             });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const notyf = new Notyf();
+
+            // Laravel session messages
+            @if (session('success'))
+                notyf.success('{{ session('success') }}');
+            @endif
+
+            @if (session('error'))
+                notyf.error('{{ session('error') }}');
+            @endif
         });
     </script>
 @endpush

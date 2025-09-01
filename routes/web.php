@@ -4,11 +4,11 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserContactController;
 use App\Http\Controllers\UserOrderController;
@@ -32,9 +32,6 @@ Route::get('/search/suggest', [FrontendController::class, 'searchProduct'])->nam
 Route::get('/product/quick-view/{id}', [FrontendController::class, 'quickView'])->name('product.quickView');
 Route::get('/product/{product}/{slug}', [FrontendController::class, 'view'])->name('details');
 
-// Route::get('/orders', [UserOrderController::class, 'index'])->middleware('auth')->name('orders.index');
-// Route::get('/orders-details', [UserOrderController::class, 'show'])->middleware('auth')->name('orders.show');
-
 // ───── Authenticated Dashboard ─────
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -57,6 +54,15 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     })->name('admin.dashboard');
 });
 
+// ───── Products Routes ─────
+Route::get('admin/products', [ProductController::class, 'index'])->middleware(['auth', 'admin'])->name('products.index');
+Route::get('admin/products/create', [ProductController::class, 'create'])->middleware(['auth', 'admin'])->name('products.create');
+Route::post('admin/products', [ProductController::class, 'store'])->middleware(['auth', 'admin'])->name('products.store');
+Route::get('admin/products/{product}/edit', [ProductController::class, 'edit'])->middleware(['auth', 'admin'])->name('products.edit');
+Route::get('admin/products/{product}', [ProductController::class, 'show'])->middleware(['auth', 'admin'])->name('products.show');
+Route::put('admin/products/{product}', [ProductController::class, 'update'])->middleware(['auth', 'admin'])->name('products.update');
+Route::delete('admin/products/{product}', [ProductController::class, 'destroy'])->middleware(['auth', 'admin'])->name('products.destroy');
+
 // ───── Categories Routes ─────
 Route::get('admin/categories', [CategoryController::class, 'index'])->middleware(['auth', 'admin'])->name('categories.index');
 Route::get('admin/categories/create', [CategoryController::class, 'create'])->middleware(['auth', 'admin'])->name('categories.create');
@@ -73,15 +79,6 @@ Route::post('admin/tags', [TagController::class, 'store'])->middleware(['auth', 
 Route::get('admin/tags/{tag}/edit', [TagController::class, 'edit'])->middleware(['auth', 'admin'])->name('tags.edit');
 Route::put('admin/tags/{tag}', [TagController::class, 'update'])->middleware(['auth', 'admin'])->name('tags.update');
 Route::delete('admin/tags/{tag}', [TagController::class, 'destroy'])->middleware(['auth', 'admin'])->name('tags.destroy');
-
-// ───── Products Routes ─────
-Route::get('admin/products', [ProductController::class, 'index'])->middleware(['auth', 'admin'])->name('products.index');
-Route::get('admin/products/create', [ProductController::class, 'create'])->middleware(['auth', 'admin'])->name('products.create');
-Route::post('admin/products', [ProductController::class, 'store'])->middleware(['auth', 'admin'])->name('products.store');
-Route::get('admin/products/{product}/edit', [ProductController::class, 'edit'])->middleware(['auth', 'admin'])->name('products.edit');
-Route::get('admin/products/{product}', [ProductController::class, 'show'])->middleware(['auth', 'admin'])->name('products.show');
-Route::put('admin/products/{product}', [ProductController::class, 'update'])->middleware(['auth', 'admin'])->name('products.update');
-Route::delete('admin/products/{product}', [ProductController::class, 'destroy'])->middleware(['auth', 'admin'])->name('products.destroy');
 
 // ───── Coupons Routes ─────
 Route::get('admin/coupons', [CouponController::class, 'index'])->middleware(['auth', 'admin'])->name('coupons.index');
@@ -118,15 +115,14 @@ Route::get('/payment/cancel', [CheckoutController::class, 'paymentCancel'])->nam
 
 
 // ─────User Review Routes ─────
-Route::middleware(['auth'])->group(function () {
-    Route::post('/reviews', [UserReviewController::class, 'store'])->name('review.store');
-});
+Route::post('/reviews', [UserReviewController::class, 'store'])->middleware('auth')->name('review.store');
+
 // ─────Admin Review Routes ─────
-Route::get('/admin/reviews', [ReviewController::class, 'index'])->middleware(['auth', 'admin'])->name('admin.reviews.index');
-Route::get('/admin/reviews/{review}', [ReviewController::class, 'show'])->middleware(['auth', 'admin'])->name('admin.reviews.show');
-Route::get('/admin/reviews/{review}/edit', [ReviewController::class, 'edit'])->middleware(['auth', 'admin'])->name('admin.reviews.edit');
-Route::put('/admin/reviews/{review}', [ReviewController::class, 'update'])->middleware(['auth', 'admin'])->name('admin.reviews.update');
-Route::delete('/admin/reviews/{review}', [ReviewController::class, 'destroy'])->middleware(['auth', 'admin'])->name('admin.reviews.destroy');
+Route::get('admin/reviews', [ReviewController::class, 'index'])->middleware(['auth', 'admin'])->name('admin.reviews.index');
+Route::get('admin/reviews/{review}', [ReviewController::class, 'show'])->middleware(['auth', 'admin'])->name('admin.reviews.show');
+Route::get('admin/reviews/{review}/edit', [ReviewController::class, 'edit'])->middleware(['auth', 'admin'])->name('admin.reviews.edit');
+Route::put('admin/reviews/{review}', [ReviewController::class, 'update'])->middleware(['auth', 'admin'])->name('admin.reviews.update');
+Route::delete('admin/reviews/{review}', [ReviewController::class, 'destroy'])->middleware(['auth', 'admin'])->name('admin.reviews.destroy');
 
 // ─────Contact Review Routes ─────
 Route::get('/contact', [UserContactController::class, 'index'])->name('contact');
@@ -137,13 +133,13 @@ Route::get('/order/cancelled', [UserOrderController::class, 'cancelPage'])->name
 
 
 // ───── Admin Blog Routes ─────
-Route::get('/admin/blogs', [BlogController::class, 'index'])->middleware(['auth', 'admin'])->name('admin.blogs.index');
-Route::get('/admin/blogs/create', [BlogController::class, 'create'])->middleware(['auth', 'admin'])->name('admin.blogs.create');
-Route::post('/admin/blogs', [BlogController::class, 'store'])->middleware(['auth', 'admin'])->name('admin.blogs.store');
-Route::get('/admin/blogs/{blog}/edit', [BlogController::class, 'edit'])->middleware(['auth', 'admin'])->name('admin.blogs.edit');
-Route::get('/admin/blogs/{blog}', [BlogController::class, 'show'])->middleware(['auth', 'admin'])->name('admin.blogs.show');
-Route::put('/admin/blogs/{blog}', [BlogController::class, 'update'])->middleware(['auth', 'admin'])->name('admin.blogs.update');
-Route::delete('/admin/blogs/{blog}', [BlogController::class, 'destroy'])->middleware(['auth', 'admin'])->name('admin.blogs.destroy');
+Route::get('admin/blogs', [BlogController::class, 'index'])->middleware(['auth', 'admin'])->name('admin.blogs.index');
+Route::get('admin/blogs/create', [BlogController::class, 'create'])->middleware(['auth', 'admin'])->name('admin.blogs.create');
+Route::post('admin/blogs', [BlogController::class, 'store'])->middleware(['auth', 'admin'])->name('admin.blogs.store');
+Route::get('admin/blogs/{blog}/edit', [BlogController::class, 'edit'])->middleware(['auth', 'admin'])->name('admin.blogs.edit');
+Route::get('admin/blogs/{blog}', [BlogController::class, 'show'])->middleware(['auth', 'admin'])->name('admin.blogs.show');
+Route::put('admin/blogs/{blog}', [BlogController::class, 'update'])->middleware(['auth', 'admin'])->name('admin.blogs.update');
+Route::delete('admin/blogs/{blog}', [BlogController::class, 'destroy'])->middleware(['auth', 'admin'])->name('admin.blogs.destroy');
 Route::post('/tinymce/upload', [BlogController::class, 'tinymceUpload'])->middleware(['auth' , 'admin'])->name('tinymce.upload');
 
 
@@ -163,7 +159,6 @@ Route::put('admin/comments/{comment}', [BlogCommentController::class, 'update'])
 Route::get('admin/comments/{comment}', [BlogCommentController::class, 'show'])->middleware(['auth', 'admin'])->name('admin.comments.show');
 Route::delete('admin/comments/{comment}', [BlogCommentController::class, 'destroy'])->middleware(['auth', 'admin'])->name('admin.comments.destroy');
 
-// in routes/web.php
 
 
 

@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
 </head>
 
 <body>
@@ -239,9 +240,20 @@
                             <a href="tel:+380961381876">+380961381876</a>
                         </div>
                         <div class="header-top-notice d-none d-lg-block">
-                            <p>TAKE CARE OF YOUR Health <span class="text-white">25% OFF</span> USE CODE “ DOFIX03 ”
-                            </p>
+                            @if ($latestCoupon)
+                                <p>
+                                    {{ $latestCoupon->name }} —
+                                    <span class="text-white">
+                                        {{ $latestCoupon->discount_value }}{{ $latestCoupon->discount_type == 'percent' ? '%' : ' PKR' }}
+                                        OFF
+                                    </span>
+                                    USE CODE “ {{ $latestCoupon->code }} ”
+                                </p>
+                            @else
+                                <p>No active offers available right now.</p>
+                            @endif
                         </div>
+
                         <div class="tp-header-top-menu d-flex align-items-center justify-content-end">
                             <div class="header-lang-item header-lang">
                                 <span class="header-lang-toggle text-white" id="header-lang-toggle">English</span>

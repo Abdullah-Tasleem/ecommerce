@@ -121,6 +121,30 @@
      <!-- Footer area end -->
 
      <!-- JS here -->
+
+     <script src="https://js.pusher.com/8.0/pusher.min.js"></script>
+     <script>
+         window.Echo.private('admin.notifications')
+             .listen('.order.placed', (e) => {
+                 addAdminNotification(`New order #${e.id} by ${e.customer} — $${e.total}`);
+             })
+             .listen('.review.submitted', (e) => {
+                 addAdminNotification(`New ${e.rating}★ review on ${e.product} by ${e.user}: ${e.excerpt}`);
+             });
+
+         const notyf = new Notyf({
+             duration: 5000,
+             position: {
+                 x: 'right',
+                 y: 'top'
+             }
+         });
+
+         function addAdminNotification(text) {
+             notyf.success(text);
+         }
+     </script>
+
      <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
      <script src="{{ asset('assets/js/waypoints.min.js') }}"></script>
      <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
@@ -133,6 +157,7 @@
      <script src="{{ asset('assets/js/ajax-form.js') }}"></script>
      <script src="{{ asset('assets/js/beforeafter.jquery-1.0.0.min.js') }}"></script>
      <script src="{{ asset('assets/js/main.js') }}"></script>
+     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
      @stack('scripts')
      <script>
          document.addEventListener('DOMContentLoaded', function() {

@@ -739,3 +739,31 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var notyf = new Notyf({
+                duration: 4000,
+                position: {
+                    x: 'right',
+                    y: 'top',
+                }
+            });
+
+            @if (session('success'))
+                notyf.success("{{ session('success') }}");
+            @endif
+
+            @if (session('error'))
+                notyf.error("{{ session('error') }}");
+            @endif
+
+            @if ($errors->any())
+                @foreach ($errors->all() as $error)
+                    notyf.error("{{ $error }}");
+                @endforeach
+            @endif
+        });
+    </script>
+@endpush
