@@ -1,15 +1,16 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserContactController;
 use App\Http\Controllers\UserOrderController;
 use App\Http\Controllers\UserReviewController;
@@ -20,6 +21,7 @@ use App\Http\Controllers\UserBlogController;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
+use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
 
 
@@ -45,14 +47,15 @@ Route::middleware('auth')->group(function () {
 });
 
 // ───── Admin Dashboard ─────
-Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
-    Route::get('/', function () {
-        $usersCount = User::count();
-        $ordersCount = Order::count();
-        $productsCount = Product::count();
-        return view('dashboard.dashboard', compact('usersCount', 'ordersCount' , 'productsCount'));
-    })->name('admin.dashboard');
-});
+Route::get('admin', [AdminController::class, 'dashboard'])->middleware(['auth', 'admin'])->name('admin.dashboard');
+Route::post('/notifications/mark-as-read', function () {
+    $user = auth('admin')->user();
+    if ($user) {
+        $user->unreadNotifications->markAsRead();
+    }
+    return response()->json(['success' => true]);
+})->name('notifications.markAsRead');
+
 
 // ───── Products Routes ─────
 Route::get('admin/products', [ProductController::class, 'index'])->middleware(['auth', 'admin'])->name('products.index');
@@ -140,7 +143,7 @@ Route::get('admin/blogs/{blog}/edit', [BlogController::class, 'edit'])->middlewa
 Route::get('admin/blogs/{blog}', [BlogController::class, 'show'])->middleware(['auth', 'admin'])->name('admin.blogs.show');
 Route::put('admin/blogs/{blog}', [BlogController::class, 'update'])->middleware(['auth', 'admin'])->name('admin.blogs.update');
 Route::delete('admin/blogs/{blog}', [BlogController::class, 'destroy'])->middleware(['auth', 'admin'])->name('admin.blogs.destroy');
-Route::post('/tinymce/upload', [BlogController::class, 'tinymceUpload'])->middleware(['auth' , 'admin'])->name('tinymce.upload');
+Route::post('/tinymce/upload', [BlogController::class, 'tinymceUpload'])->middleware(['auth', 'admin'])->name('tinymce.upload');
 
 
 // ───── User Blog Routes ─────
@@ -162,6 +165,6 @@ Route::delete('admin/comments/{comment}', [BlogCommentController::class, 'destro
 
 
 
-
+Broadcast::routes();
 // ───── Auth Routes ─────
 require __DIR__ . '/auth.php';

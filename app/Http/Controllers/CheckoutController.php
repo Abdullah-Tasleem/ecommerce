@@ -13,6 +13,8 @@ use Illuminate\Support\Str;
 use App\Mail\OrderConfirmation;
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
+use App\Notifications\OrderPlacedNotification;
+use Illuminate\Support\Facades\Notification;
 
 class CheckoutController extends Controller
 {
@@ -71,7 +73,8 @@ class CheckoutController extends Controller
         if ($request->payment_method === 'cod') {
             $order = $this->storeOrder($user, $cart, $subtotal, $discount, $finalAmount, $address, 'pending', 'cod');
 
-            event(new OrderPlaced($order));
+            $admins = User::where('role', 'admin')->get();
+            Notification::send($admins, new OrderPlacedNotification($order));
             Mail::to($user->email)->send(new OrderConfirmation($order));
             session()->forget('cart');
 
@@ -133,8 +136,9 @@ class CheckoutController extends Controller
 
         $order = $this->storeOrder($user, $cart, $subtotal, $discount, $finalAmount, $address, 'paid', 'stripe');
 
-        event(new OrderPlaced($order));
-        Mail::to($user->email)->send(new OrderConfirmation($order));
+        $admins = User::where('role', 'admin')->get();
+        Notification::send($admins, new OrderPlacedNotification($order));
+
 
         session()->forget([
             'cart',

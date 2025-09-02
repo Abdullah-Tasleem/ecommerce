@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Review;
+use App\Models\User;
+use App\Notifications\ReviewSubmittedNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 
 class UserReviewController extends Controller
 {
@@ -20,7 +23,7 @@ class UserReviewController extends Controller
             return redirect()->back()->with('error', 'You must be logged in to leave a review.');
         }
 
-        Review::create([
+        $review = Review::create([
             'user_id' => Auth::id(),
             'product_id' => $request->product_id,
             'rating' => $request->rating,
@@ -28,6 +31,8 @@ class UserReviewController extends Controller
             'user_name' => Auth::user()->name,
             'user_email' => Auth::user()->email,
         ]);
+        $admins = User::where('role', 'admin')->get();
+        Notification::send($admins, new ReviewSubmittedNotification($review));
 
         return redirect()->back()->with('success', 'Review submitted successfully!');
     }

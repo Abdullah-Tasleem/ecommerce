@@ -31,7 +31,7 @@ class ReviewSubmitted implements ShouldBroadcastNow
             'rating'     => $this->review->rating,
             'user'       => optional($this->review->user)->name ?? 'Guest',
             'submitted'  => $this->review->created_at?->toIso8601String(),
-            'excerpt'    => str($this->review->comment)->limit(80)->toString(),
+            'review'    => $this->review->review,
         ];
     }
 }

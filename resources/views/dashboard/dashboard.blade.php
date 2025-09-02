@@ -37,7 +37,7 @@
                 </div>
             </div> <!-- end col--> --}}
 
-            <div class="col-xxl-3 col-sm-6">
+            <div class="col-xxl-4 col-sm-6">
                 <div class="card widget-flat text-bg-purple">
                     <div class="card-body">
                         <div class="float-end">
@@ -52,7 +52,7 @@
                 </div>
             </div>
 
-            <div class="col-xxl-3 col-sm-6">
+            <div class="col-xxl-4 col-sm-6">
                 <div class="card widget-flat text-bg-primary">
                     <div class="card-body">
                         <div class="float-end">
@@ -66,7 +66,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xxl-3 col-sm-6">
+            <div class="col-xxl-4 col-sm-6">
                 <div class="card widget-flat text-bg-info">
                     <div class="card-body">
                         <div class="float-end">
@@ -78,11 +78,12 @@
                             <span class="text-nowrap">Since last month</span>
                         </p>
                     </div>
+                    <div id="newOrdersCount"></div>
                 </div>
             </div> <!-- end col-->
         </div>
 
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-body">
@@ -165,7 +166,7 @@
                     </div> <!-- end card-body-->
                 </div> <!-- end card-->
             </div> <!-- end col-->
-        </div>
+        </div> --}}
         <!-- end row -->
     </div>
     <!-- container -->

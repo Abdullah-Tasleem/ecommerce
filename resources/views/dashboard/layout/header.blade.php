@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>
         @hasSection('title')
             @yield('title') | Velonic
@@ -35,6 +37,7 @@
     <link href="{{ asset('dashboard-assets/css/app.min.css') }}" rel="stylesheet" id="app-style" />
     <link href="{{ asset('dashboard-assets/css/icons.min.css') }}" rel="stylesheet" />
     <link rel="icon" type="image/png" href="{{ asset('admin_favicon.png') }}">
+    @vite('resources/js/app.js')
 </head>
 
 <body>
@@ -109,6 +112,35 @@
                         </div>
                     </li>
 
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="notificationsDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="ri-notification-3-line fs-22"></i>
+                            <span class="badge bg-danger rounded-pill" id="newOrdersCount">
+                                {{ auth()->user()->unreadNotifications->count() }}
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown"
+                            style="width: 300px; max-height: 400px; overflow-y: auto;" id="notificationsList">
+
+                            <li class="dropdown-header">Notifications</li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+
+                            @foreach ($notifications as $notification)
+                                <li>
+                                    <a href="#" class="dropdown-item text-wrap">
+                                        {{ $notification->data['message'] }}
+                                        <br>
+                                        <small
+                                            class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </li>
+
                     <li class="d-none d-sm-inline-block">
                         <a class="nav-link" data-bs-toggle="offcanvas" href="#theme-settings-offcanvas">
                             <i class="ri-settings-3-line fs-22"></i>
@@ -173,10 +205,10 @@
             <!-- Brand Logo Dark -->
             <a href="index.html" class="logo logo-dark">
                 <span class="logo-lg">
-                    <img src="assets/images/logo-dark.png" alt="dark logo">
+                    <img src="{{ asset('dashboard-assets/images/logo-dark.png') }}" alt="dark logo">
                 </span>
                 <span class="logo-sm">
-                    <img src="assets/images/logo-sm.png" alt="small logo">
+                    <img src="{{ asset('dashboard-assets/images/logo-sm.png') }}" alt="small logo">
                 </span>
             </a>
 
@@ -197,7 +229,7 @@
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" data-bs-target="#sidebarPages" role="button"
                             aria-expanded="false" aria-controls="sidebarPages" class="side-nav-link">
-                            <i class="ri-pages-line"></i>
+                            <i class="ri-store-2-line"></i>
                             <span>Manage Products </span>
                             <span class="menu-arrow"></span>
                         </a>
@@ -213,25 +245,28 @@
                     </li>
                     <li class="side-nav-item">
                         <a href="{{ route('admin.orders.index') }}" class="side-nav-link">
-                            <i class="ri-dashboard-3-line"></i>
+                            <i class="ri-shopping-bag-3-line"></i> {{-- Orders --}}
                             <span>Orders</span>
                         </a>
                     </li>
+
                     <li class="side-nav-item">
                         <a href="{{ route('admin.reviews.index') }}" class="side-nav-link">
-                            <i class="ri-dashboard-3-line"></i>
+                            <i class="ri-star-line"></i> {{-- Reviews --}}
                             <span>Reviews</span>
                         </a>
                     </li>
+
                     <li class="side-nav-item">
                         <a href="{{ route('admin.blogs.index') }}" class="side-nav-link">
-                            <i class="ri-dashboard-3-line"></i>
+                            <i class="ri-article-line"></i> {{-- Blogs --}}
                             <span>Blogs</span>
                         </a>
                     </li>
+
                     <li class="side-nav-item">
                         <a href="{{ route('admin.comments.index') }}" class="side-nav-link">
-                            <i class="ri-dashboard-3-line"></i>
+                            <i class="ri-chat-3-line"></i> {{-- Blogs Comments --}}
                             <span>Blogs Comments</span>
                         </a>
                     </li>
