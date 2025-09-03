@@ -7,6 +7,9 @@
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
+        <a href="{{ route('admin.orders.export.pdf') }}" class="btn btn-primary mb-3">Export to PDF</a>
+        <a href="{{ route('admin.orders.export.csv') }}" class="btn btn-success mb-3">Export to CSV</a>
+
 
         <table id="ordersTable" class="table table-bordered">
             <thead>

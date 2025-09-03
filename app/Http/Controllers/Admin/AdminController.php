@@ -11,13 +11,11 @@ use Illuminate\Http\Request;
 class AdminController extends Controller
 {
     public function dashboard()
-{
-    $usersCount = User::count();
-    $ordersCount = Order::count();
-    $productsCount = Product::count();
-    $notifications = auth()->user()->notifications()->latest()->take(10)->get();
+    {
+        $usersCount = User::count();
+        $ordersCount = Order::count();
+        $productsCount = Product::count();
 
-    return view('dashboard.dashboard', compact('usersCount', 'ordersCount', 'productsCount', 'notifications'));
-}
-
+        return view('dashboard.dashboard', compact('usersCount', 'ordersCount', 'productsCount'));
+    }
 }

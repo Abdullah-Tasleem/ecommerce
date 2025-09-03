@@ -10,7 +10,7 @@ class ReviewController extends Controller
 {
     public function index()
     {
-        $reviews = Review::latest()->paginate(10);
+    $reviews = Review::latest()->get(); 
         return view('admin.reviews.index', compact('reviews'));
     }
     public function show(Review $review)

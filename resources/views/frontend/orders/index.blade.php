@@ -71,7 +71,6 @@
                         emptyTable: 'No orders found.'
                     }
                 });
-
                 // Search input placeholder
                 $('#ordersTable_filter input').attr('placeholder', 'Search orders...');
             });

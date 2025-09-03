@@ -23,6 +23,10 @@ use App\Models\Product;
 use App\Models\User;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\Mail;
+use App\Mail\WelcomeMail;
 
 
 // ───── Frontend Routes ─────
@@ -48,8 +52,8 @@ Route::middleware('auth')->group(function () {
 
 // ───── Admin Dashboard ─────
 Route::get('admin', [AdminController::class, 'dashboard'])->middleware(['auth', 'admin'])->name('admin.dashboard');
-Route::post('/notifications/mark-as-read', function () {
-    $user = auth('admin')->user();
+Route::post('/notifications/mark-as-read', function (Request $request) {
+    $user = $request->user();
     if ($user) {
         $user->unreadNotifications->markAsRead();
     }
@@ -106,6 +110,10 @@ Route::get('/admin/orders/{order}', [OrderController::class, 'show'])->middlewar
 Route::get('/admin/orders/{order}/edit', [OrderController::class, 'edit'])->middleware(['auth', 'admin'])->name('admin.orders.edit');
 Route::put('/admin/orders/{order}', [OrderController::class, 'update'])->middleware(['auth', 'admin'])->name('admin.orders.update');
 Route::delete('/admin/orders/{order}', [OrderController::class, 'destroy'])->middleware(['auth', 'admin'])->name('admin.orders.destroy');
+Route::get('/admin/orders/export/pdf', [OrderController::class, 'exportPdf'])->name('admin.orders.export.pdf');
+Route::get('/admin/orders/export/csv', [OrderController::class, 'exportCsv'])->name('admin.orders.export.csv');
+
+
 
 // ───── User Order Routes ─────
 Route::get('/my-orders', [UserOrderController::class, 'index'])->middleware('auth')->name('orders.index');

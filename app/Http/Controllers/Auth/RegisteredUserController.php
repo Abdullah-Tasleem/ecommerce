@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use App\Jobs\SendWelcomeEmail;
 
 class RegisteredUserController extends Controller
 {
@@ -40,7 +41,7 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-
+        SendWelcomeEmail::dispatch($user);
         event(new Registered($user));
 
         Auth::login($user);

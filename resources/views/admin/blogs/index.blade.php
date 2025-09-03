@@ -12,15 +12,14 @@
         @endif
 
 
-        <table id="datatable" class="table table-bordered">
-
-            <thead>
+        <table id="datatable" class="table table-bordered text-center">
+            <thead class="text-center">
                 <tr>
-                    <th>Title</th>
-                    <th>Published At</th>
-                    <th>Image</th>
-                    <th>Status</th>
-                    <th>Actions</th>
+                    <th class="text-center">Title</th>
+                    <th class="text-center">Published At</th>
+                    <th class="text-center">Image</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Actions</th>
                 </tr>
             </thead>
             <tbody>

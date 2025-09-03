@@ -46,14 +46,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (dropdown) {
         dropdown.addEventListener("click", function () {
-            fetch("{{ route('notifications.markAsRead') }}", {
+            fetch(('/notifications/mark-as-read'), {
                 method: "POST",
                 headers: {
                     "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content,
                     "Content-Type": "application/json",
                 },
             }).then(() => {
-                document.getElementById("newOrdersCount").innerText = 0;
+                // document.getElementById("newOrdersCount").innerText = 0;
+                console.log('Notifications marked as read');
+                const badge = document.getElementById("newOrdersCount");
+                if (badge) {
+                    badge.remove();
+                }
+
             });
         });
     }

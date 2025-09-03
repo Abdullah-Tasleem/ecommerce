@@ -30,5 +30,8 @@ class AppServiceProvider extends ServiceProvider
 
             $view->with('latestCoupon', $latestCoupon);
         });
+        View::composer('dashboard.layout.header', function ($view) {
+            $view->with('notifications', auth()->user() ? auth()->user()->notifications()->latest()->take(10)->get() : collect());
+        });
     }
 }

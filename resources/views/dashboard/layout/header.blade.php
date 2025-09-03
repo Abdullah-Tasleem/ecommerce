@@ -14,6 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully responsive admin theme which can be used to build CRM, CMS,ERP etc." name="description" />
     <meta content="Techzaa" name="author" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
@@ -37,6 +38,8 @@
     <link href="{{ asset('dashboard-assets/css/app.min.css') }}" rel="stylesheet" id="app-style" />
     <link href="{{ asset('dashboard-assets/css/icons.min.css') }}" rel="stylesheet" />
     <link rel="icon" type="image/png" href="{{ asset('admin_favicon.png') }}">
+
+
     @vite('resources/js/app.js')
 </head>
 
@@ -116,9 +119,11 @@
                         <a class="nav-link dropdown-toggle" href="#" id="notificationsDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="ri-notification-3-line fs-22"></i>
+                           @if(auth()->user()->unreadNotifications->count() > 0)
                             <span class="badge bg-danger rounded-pill" id="newOrdersCount">
                                 {{ auth()->user()->unreadNotifications->count() }}
                             </span>
+                            @endif
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown"
                             style="width: 300px; max-height: 400px; overflow-y: auto;" id="notificationsList">
