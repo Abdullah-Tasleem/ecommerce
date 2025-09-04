@@ -36,7 +36,7 @@
                         <td class="text-center">
                             <a href="{{ route('categories.show', $category->id) }}"
                                 class="btn btn-sm btn-secondary">View</a>
-                            <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                            <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-sm btn-success">Edit</a>
                             <form method="POST" action="{{ route('categories.destroy', $category->id) }}"
                                 style="display:inline;">
                                 @csrf

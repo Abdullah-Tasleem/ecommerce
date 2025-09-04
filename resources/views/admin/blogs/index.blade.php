@@ -4,14 +4,6 @@
     <div class="container">
         <h2 class="mt-2">Blog List</h2>
         <a href="{{ route('admin.blogs.create') }}" class="btn btn-primary mb-3">Create New Blog</a>
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert" id="successMessage">
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
-
-
         <table id="datatable" class="table table-bordered text-center">
             <thead class="text-center">
                 <tr>
@@ -39,8 +31,8 @@
                         </td>
                         <td>{{ $blog->status ? 'Active' : 'Inactive' }}</td>
                         <td>
-                            <a href="{{ route('admin.blogs.show', $blog) }}" class="btn btn-info btn-sm">View</a>
-                            <a href="{{ route('admin.blogs.edit', $blog) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="{{ route('admin.blogs.show', $blog) }}" class="btn btn-secondary btn-sm">View</a>
+                            <a href="{{ route('admin.blogs.edit', $blog) }}" class="btn btn-success btn-sm">Edit</a>
                             <form action="{{ route('admin.blogs.destroy', $blog) }}" method="POST"
                                 style="display:inline-block;">
                                 @csrf @method('DELETE')

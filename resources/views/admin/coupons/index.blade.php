@@ -15,7 +15,7 @@
         @endif
 
         <div class="table-responsive">
-            <table class="table table-bordered table-striped align-middle">
+            <table class="table table-bordered align-middle">
                 <thead>
                     <tr>
                         <th>Code</th>
@@ -54,7 +54,7 @@
                             <td>
                                 <a href="{{ route('coupons.show', $coupon->code) }}" class="btn btn-sm btn-secondary">View</a>
                                 <a href="{{ route('coupons.edit', ['coupon' => $coupon->code]) }}"
-                                    class="btn btn-sm btn-primary">Edit</a>
+                                    class="btn btn-sm btn-success">Edit</a>
                                 <form action="{{ route('coupons.destroy', ['code' => $coupon->code]) }}" method="POST"
                                     style="display: inline-block">
                                     @csrf

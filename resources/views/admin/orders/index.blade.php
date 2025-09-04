@@ -3,15 +3,12 @@
 @section('dashboard')
     <div class="container mt-3">
         <h2>All Orders</h2>
-
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
-        <a href="{{ route('admin.orders.export.pdf') }}" class="btn btn-primary mb-3">Export to PDF</a>
-        <a href="{{ route('admin.orders.export.csv') }}" class="btn btn-success mb-3">Export to CSV</a>
-
-
-        <table id="ordersTable" class="table table-bordered">
+        <div class="d-flex gap-2 mb-3">
+            <a href="{{ route('admin.orders.export.pdf') }}" class="btn btn-primary">Export to PDF</a>
+            <a href="{{ route('admin.orders.export.csv') }}" class="btn btn-success">Export to CSV</a>
+            <div id="datatable-buttons"></div>
+        </div>
+        <table id="ordersTable" class="table table-bordered ">
             <thead>
                 <tr>
                     <th>#ID</th>
@@ -59,28 +56,32 @@
     </div>
 @endsection
 @push('script')
-    <script>
-        setTimeout(() => {
-            const msg = document.getElementById('successMessage');
-            if (msg) {
-                msg.classList.add('fade');
-                setTimeout(() => msg.remove(), 500);
-            }
-        }, 3000);
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+
     <script>
         $(document).ready(function() {
-            $('#ordersTable').DataTable({
-                "pageLength": 10,
-                "order": [
+            var table = $('#ordersTable').DataTable({
+                pageLength: 10,
+                order: [
                     [0, "desc"]
-                ], // sort by ID descending
-                "columnDefs": [{
-                        "orderable": false,
-                        "targets": -1
-                    } // disable sorting on Actions column
-                ]
+                ],
+                columnDefs: [{
+                    orderable: false,
+                    targets: -1
+                }],
+                buttons: [{
+                    extend: 'excelHtml5',
+                    text: 'Export Google Sheet (Excel)',
+                    className: 'btn btn-info'
+                }],
+                dom: '<"top d-flex justify-content-between align-items-center mb-2"lfB>rtip'
             });
+
+
+            // Button ko apne custom div me move karna
+            table.buttons().container().appendTo('#datatable-buttons');
         });
     </script>
 @endpush

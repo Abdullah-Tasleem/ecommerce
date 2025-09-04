@@ -5,15 +5,6 @@
         <h2>All Products</h2>
 
         <a href="{{ route('products.create') }}" class="btn btn-success mb-3">+ Add New Product</a>
-
-        {{-- Success Message --}}
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert" id="successMessage">
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
-
         {{-- Products Table --}}
         <table id="datatable" class="table table-bordered">
             <thead>
@@ -33,7 +24,7 @@
             <tbody>
                 @foreach ($products as $product)
                     <tr>
-                        <td>{{ $loop->iteration}}</td>
+                        <td>{{ $loop->iteration }}</td>
                         <td>{{ $product->name }}</td>
                         {{-- <td>
                             {{ Str::limit($product->slug, 20) }}
@@ -65,7 +56,7 @@
                         </td>
                         <td>
                             <a href="{{ route('products.show', $product->id) }}" class="btn btn-sm btn-secondary">View</a>
-                            <a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                            <a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-success">Edit</a>
 
                             <form method="POST" action="{{ route('products.destroy', $product->id) }}"
                                 style="display:inline;">

@@ -3,11 +3,6 @@
 @section('dashboard')
     <div class="container mt-3">
         <h2>All Reviews</h2>
-
-        @if (session('success'))
-            <div class="alert alert-success" id="successMessage">{{ session('success') }}</div>
-        @endif
-
         <table id="datatable" class="table table-bordered">
             <thead>
                 <tr>
@@ -35,8 +30,8 @@
                         <td>{{ Str::limit($review->review, 50) }}</td>
                         <td>{{ $review->created_at->format('d M Y') }}</td>
                         <td>
-                            <a href="{{ route('admin.reviews.show', $review) }}" class="btn btn-sm btn-info">View</a>
-                            <a href="{{ route('admin.reviews.edit', $review) }}" class="btn btn-sm btn-warning">Edit</a>
+                            <a href="{{ route('admin.reviews.show', $review) }}" class="btn btn-sm btn-secondary">View</a>
+                            <a href="{{ route('admin.reviews.edit', $review) }}" class="btn btn-sm btn-success">Edit</a>
                             <form method="POST" action="{{ route('admin.reviews.destroy', $review) }}"
                                 style="display:inline-block">
                                 @csrf

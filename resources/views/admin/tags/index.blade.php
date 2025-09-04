@@ -13,7 +13,7 @@
             </div>
         @endif
 
-        <table id="datatable" class="table table-striped text-center align-middle">
+        <table id="datatable" class="table table-bordered text-center align-middle">
             <thead class="text-center">
                 <tr>
                     <th class="text-center">Name</th>
@@ -33,7 +33,7 @@
                             @endif
                         </td>
                         <td>
-                            <a href="{{ route('tags.edit', $tag->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                            <a href="{{ route('tags.edit', $tag->id) }}" class="btn btn-sm btn-success">Edit</a>
                             <form method="POST" action="{{ route('tags.destroy', $tag->id) }}" style="display:inline;">
                                 @csrf
                                 @method('DELETE')

@@ -50,12 +50,6 @@
 @section('section')
     <!-- login area start -->
     <section class="tp-login-area pb-140 p-relative z-index-1 fix">
-        <div class="tp-login-shape">
-            <img class="tp-login-shape-1" src="{{ asset('frontend/assets/img/login/login-shape-1.png') }}" alt="">
-            <img class="tp-login-shape-2" src="{{ asset('frontend/assets/img/login/login-shape-2.png') }}" alt="">
-            <img class="tp-login-shape-3" src="{{ asset('frontend/assets/img/login/login-shape-3.png') }}" alt="">
-            <img class="tp-login-shape-4" src="{{ asset('frontend/assets/img/login/login-shape-4.png') }}" alt="">
-        </div>
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-xl-6 col-lg-8">
@@ -66,9 +60,8 @@
                         </div>
                         <div class="tp-login-option">
                             <div class="tp-login-social mb-10 d-flex flex-wrap align-items-center justify-content-center">
-                                <a class="tp-login-fb" href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
-                                <a class="tp-login-google" href="#"><img
-                                        src="{{ asset('frontend/assets/img/icon/google.png') }}" alt=""> Google</a>
+                                <a class="tp-login-fb" href="#"><i class="fab fa-facebook-f"></i> Facebook</a> &nbsp;&nbsp;
+                                <a class="tp-login-google" href="#"><i class="fa-brands fa-google"></i> Google</a>
                             </div>
                             <div class="tp-login-mail text-center mb-40">
                                 <p>or Sign in with <a href="#">Email</a></p>

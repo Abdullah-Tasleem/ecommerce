@@ -2,21 +2,8 @@
 @section('title', 'Create Product')
 
 @section('dashboard')
-    <div class="container mt-4">
+    <div class="container my-4">
         <h2>Add New Product</h2>
-
-        {{-- Validation Errors --}}
-        @if ($errors->any())
-            <div class="alert alert-danger alert-dismissible fade show" role="alert" id="errorMessage">
-                <strong>Validation Errors:</strong>
-                <ul class="mb-0 mt-1">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
 
         {{-- Product Form --}}
         <form method="POST" action="{{ route('products.store') }}" enctype="multipart/form-data">
@@ -26,28 +13,40 @@
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label>Name</label>
-                    <input type="text" name="name" placeholder="Enter product name" class="form-control" value="{{ old('name') }}" required>
+                    <input type="text" name="name" placeholder="Enter product name" class="form-control"
+                        value="{{ old('name') }}" required>
                 </div>
 
                 <div class="col-md-6 mb-3">
                     <label>Slug</label>
-                    <input type="text" name="slug" placeholder="Auto-generated if left blank" class="form-control" value="{{ old('slug') }}">
+                    <input type="text" name="slug" placeholder="Auto-generated if left blank" class="form-control"
+                        value="{{ old('slug') }}">
                 </div>
 
                 <div class="col-md-6 mb-3">
                     <label>Regular Price</label>
-                    <input type="number" step="0.01" name="regular_price" class="form-control" value="{{ old('regular_price') }}" required>
+                    <input type="number" step="0.01" name="regular_price" class="form-control"
+                        value="{{ old('regular_price') }}" required>
                 </div>
 
                 <div class="col-md-6 mb-3">
                     <label>Sale Price</label>
-                    <input type="number" step="0.01" name="sale_price" placeholder="Optional sale price" class="form-control" value="{{ old('sale_price') }}">
+                    <input type="number" step="0.01" name="sale_price" placeholder="Optional sale price"
+                        class="form-control" value="{{ old('sale_price') }}">
                 </div>
 
                 <div class="col-md-6 mb-3">
                     <label>Discount (%)</label>
-                    <input type="number" name="off" placeholder="Discount percentage" class="form-control" value="{{ old('off') }}">
+                    <select name="off" class="form-control">
+                        <option value="">-- Select Discount --</option>
+                        @for ($i = 0; $i <= 100; $i += 10)
+                            <option value="{{ $i }}" {{ old('off') == $i ? 'selected' : '' }}>
+                                {{ $i }}%
+                            </option>
+                        @endfor
+                    </select>
                 </div>
+
 
                 <div class="col-md-6 mb-3">
                     <label>Stock</label>
@@ -71,7 +70,8 @@
                 <label>Categories</label>
                 <select name="categories[]" class="form-control selectpicker" multiple data-live-search="true">
                     @foreach ($categories as $id => $name)
-                        <option value="{{ $id }}" {{ in_array($id, old('categories', [])) ? 'selected' : '' }}>{{ $name }}</option>
+                        <option value="{{ $id }}" {{ in_array($id, old('categories', [])) ? 'selected' : '' }}>
+                            {{ $name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -81,7 +81,8 @@
                 <label>Tags</label>
                 <select name="tags[]" class="form-control selectpicker" multiple data-live-search="true">
                     @foreach ($tags as $id => $name)
-                        <option value="{{ $id }}" {{ in_array($id, old('tags', [])) ? 'selected' : '' }}>{{ $name }}</option>
+                        <option value="{{ $id }}" {{ in_array($id, old('tags', [])) ? 'selected' : '' }}>
+                            {{ $name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -90,7 +91,8 @@
             <div class="row">
                 <div class="col-md-4 mb-3">
                     <label>Rating</label>
-                    <input type="number" step="0.1" name="rating" class="form-control" value="{{ old('rating', 0) }}">
+                    <input type="number" step="0.1" name="rating" class="form-control"
+                        value="{{ old('rating', 0) }}">
                 </div>
 
                 <div class="col-md-4 mb-3">
@@ -114,7 +116,7 @@
                     </select>
                 </div>
             </div>
-                {{-- Images --}}
+            {{-- Images --}}
             <div class="mb-3">
                 <label>Images</label>
                 <input type="file" name="images[]" id="imagesInput" class="form-control" multiple>
@@ -128,21 +130,11 @@
 @endsection
 
 @push('script')
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
-        // Hide error alert after 4 seconds
-        setTimeout(() => {
-            const alert = document.getElementById('errorMessage');
-            if (alert) {
-                alert.style.transition = 'opacity 0.5s ease';
-                alert.style.opacity = 0;
-                setTimeout(() => alert.remove(), 500);
-            }
-        }, 4000);
-
         // Initialize Select2
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('select[name="categories[]"]').select2({
                 placeholder: "Select categories",
                 allowClear: true,
@@ -160,11 +152,11 @@
         const imageInput = document.getElementById('imagesInput');
         const previewContainer = document.getElementById('imagePreviewContainer');
 
-        imageInput.addEventListener('change', function () {
+        imageInput.addEventListener('change', function() {
             previewContainer.innerHTML = '';
             Array.from(this.files).forEach((file, index) => {
                 const reader = new FileReader();
-                reader.onload = function (e) {
+                reader.onload = function(e) {
                     const col = document.createElement('div');
                     col.classList.add('col-md-3', 'mb-2');
                     col.innerHTML = `
@@ -184,4 +176,3 @@
         });
     </script>
 @endpush
-

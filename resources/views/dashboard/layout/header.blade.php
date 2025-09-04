@@ -38,6 +38,7 @@
     <link href="{{ asset('dashboard-assets/css/app.min.css') }}" rel="stylesheet" id="app-style" />
     <link href="{{ asset('dashboard-assets/css/icons.min.css') }}" rel="stylesheet" />
     <link rel="icon" type="image/png" href="{{ asset('admin_favicon.png') }}">
+     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
     @vite('resources/js/app.js')

@@ -5,22 +5,8 @@
 @section('dashboard')
     <div class="container py-4">
         <h1 class="mb-4">Comments</h1>
-
-        @if (session('success'))
-            <div class="alert alert-success" id="successMessage">
-                {{ session('success') }}
-            </div>
-        @endif
-
-        @if (session('error'))
-            <div class="alert alert-danger" id="errorMessage">
-                {{ session('error') }}
-            </div>
-        @endif
-
-
         <div class="table-responsive">
-                    <table id="datatable" class="table table-bordered">
+            <table id="datatable" class="table table-bordered">
                 <thead class="table-light">
                     <tr>
                         <th>#</th>
@@ -55,14 +41,14 @@
                             <td>{{ $comment->created_at->format('d M Y, h:i A') }}</td>
                             <td class="d-flex gap-2">
                                 <a href="{{ route('admin.comments.show', $comment->id) }}"
-                                    class="btn btn-sm btn-outline-primary">View</a>
+                                    class="btn btn-sm btn-secondary">View</a>
                                 <a href="{{ route('admin.comments.edit', $comment->id) }}"
-                                    class="btn btn-sm btn-outline-secondary">Edit</a>
+                                    class="btn btn-sm btn-success">Edit</a>
                                 <form action="{{ route('admin.comments.destroy', $comment->id) }}" method="POST"
                                     class="d-inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn btn-sm btn-outline-danger">Delete</button>
+                                    <button class="btn btn-sm btn-danger">Delete</button>
                                 </form>
                             </td>
                         </tr>
@@ -98,4 +84,3 @@
         }, 3000);
     </script>
 @endpush
-

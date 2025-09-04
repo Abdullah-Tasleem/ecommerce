@@ -3,7 +3,7 @@
 @section('section')
     <!-- Banner area start -->
     <section class="banner-4 p-relative furniture-banner-area fix bg-image pb-100"
-        data-background="assets/imgs/furniture/banner/bg.png" data-bg-color="#F5F1E6">
+        data-background="#" data-bg-color="#F5F1E6">
         <div class="swiper banner-active">
             <div class="swiper-wrapper">
                 @foreach ($bannerProducts as $product)

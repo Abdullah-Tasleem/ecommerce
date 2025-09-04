@@ -55,7 +55,7 @@
                     @endforeach
                 </select>
             </div>
-            
+
             <div class="mb-3">
                 <label for="tags">Select Tags</label>
                 <select name="tags[]" id="tags" class="form-control" multiple>
@@ -80,7 +80,7 @@
                 <input type="file" name="images[]" id="images" class="form-control" multiple>
                 <div id="image-preview" class="mt-3 d-flex flex-wrap"></div>
             </div>
-            <button type="submit" class="btn btn-success">Save</button>
+            <button type="submit" class="btn btn-success">Create</button>
             <a href="{{ route('admin.blogs.index') }}" class="btn btn-secondary">Cancel</a>
         </form>
     </div>

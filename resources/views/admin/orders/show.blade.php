@@ -43,7 +43,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($order->items as $item)
+                        @foreach($order->orderItems as $item)
                             <tr>
                                 <td>{{ $item->product?->name ?? 'Product Deleted' }}</td>
                                 <td>{{ $item->quantity }}</td>
